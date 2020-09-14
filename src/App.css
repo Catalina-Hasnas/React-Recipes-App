@@ -1,0 +1,23 @@
+.App {
+  background-color: blanchedalmond;
+  font-size: 1.2rem;
+}
+
+.color-primary {
+  color: crimson;
+}
+
+h2 {
+  letter-spacing: 2px;
+}
+
+h3 {
+  letter-spacing: -2px;
+}
+
+header {
+  background-color: blanchedalmond;
+  font-family: monospace;
+}
+
+

@@ -1,0 +1,117 @@
+.background-primary {
+    background-color: wheat;
+}
+
+.form {
+    position: relative;
+    z-index: 1;
+    margin: 0 auto 100px;
+    text-align: center;
+    /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); */
+  }
+  .form input, select {
+    outline: 0;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+    height: 3rem;
+  }
+
+  .form textarea {
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+    height: 10rem;
+
+  }
+
+  
+
+.button {
+    text-transform: uppercase;
+    outline: 0;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 16px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+    height: 3rem;
+}
+
+.ingr-button {
+    background: #4CAF50;
+  }
+  .ingr-button:hover,.ingr-button:active,.ingr-button:focus {
+    background: #43A047;
+  }
+
+.submit-button {
+    background-color: crimson;
+    }
+.submit-button:hover, .submit-button:active, .submit-button:focus {
+    background-color: #bb1133;
+}
+
+.inputfile + label {
+    max-width: 80%;
+    font-size: 1rem;
+    /* 20px */
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.625rem 1.25rem;
+    /* 10px 20px */
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile:focus + label,
+.inputfile.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile + label svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+    margin-top: -0.25em;
+    /* 4px */
+    margin-right: 0.25em;
+    /* 4px */
+}
+
+.inputfile-3 + label {
+    color: crimson;
+}
+
+.inputfile-3:focus + label,
+.inputfile-3.has-focus + label,
+.inputfile-3 + label:hover {
+    color: #bb1133;
+}
+
+.fivepxpadding {
+    padding-left: 5px;
+}

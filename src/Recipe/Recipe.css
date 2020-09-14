@@ -1,0 +1,12 @@
+.background-primary {
+    background-color: wheat;
+}
+
+hr {
+    display: block;
+    border-style: dashed;
+    border-width: 1px;
+    color: wheat;
+    margin-left: 12rem;
+    margin-right: 12rem;
+}
