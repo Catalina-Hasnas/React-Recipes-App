@@ -23,7 +23,7 @@ const recipe = (props) => {
                         <div className= "d-flex flex-column">
                             <h3 className="mt-5 ml-3 color-primary text-monospace">Directions:</h3>
                             <ol className="text-justify">
-                                {props.instructions}
+                                {props.directions}
                             </ol>
                         </div>
             </div>

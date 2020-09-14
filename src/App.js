@@ -22,7 +22,7 @@ class App extends Component {
         {quantity: 1, unitOfMeasurement: "slices", ingredient: "whole grain bread, toasted"}, 
         {quantity: 0.5, unitOfMeasurement: "teaspoons", ingredient: "olive oil"}
       ],
-      instructions: ["In a small bowl, combine avocado, lemon juice, salt, and pepper. Gently mash with the back of a fork.", "Top toasted bread with mashed avocado mixture. Drizzle with olive oil and sprinkle over desired toppings."],
+      directions: ["In a small bowl, combine avocado, lemon juice, salt, and pepper. Gently mash with the back of a fork.", "Top toasted bread with mashed avocado mixture. Drizzle with olive oil and sprinkle over desired toppings."],
       img: avocadoToastImg
     },
       {id: "02",
@@ -39,7 +39,7 @@ class App extends Component {
         {quantity: 0.5, unitOfMeasurement: "teaspoons", ingredient: "freshly ground black pepper"},
         {quantity: 0.5, unitOfMeasurement: "cups", ingredient: "olive oil"}
       ],
-      instructions: ["Place the cucumber, peppers, tomatoes and red onion in a large bowl.", "For the vinaigrette, whisk together the garlic, oregano, mustard, vinegar, salt and pepper in a small bowl. Still whisking, slowly add the olive oil to make an emulsion. Pour the vinaigrette over the vegetables. Add the feta and olives and toss lightly. Set aside for 30 minutes to allow the flavors to blend. Serve at room temperature."],
+      directions: ["Place the cucumber, peppers, tomatoes and red onion in a large bowl.", "For the vinaigrette, whisk together the garlic, oregano, mustard, vinegar, salt and pepper in a small bowl. Still whisking, slowly add the olive oil to make an emulsion. Pour the vinaigrette over the vegetables. Add the feta and olives and toss lightly. Set aside for 30 minutes to allow the flavors to blend. Serve at room temperature."],
       img: greekSaladImg
     },
       {id: "03",
@@ -58,7 +58,7 @@ class App extends Component {
         {quantity: 1, unitOfMeasurement: "cups", ingredient: "heavy cream"},
         {quantity: 1, unitOfMeasurement: "teaspoons", ingredient: "fresh parsley"}
       ],
-      instructions: ["Heat butter and oil in a large pot over medium-high heat until melted. Sauté onion for 2 to 3 minutes until softened. Cook garlic until fragrant, about 1 minute.", "Add mushrooms and 2 teaspoons thyme, cook for 5 minutes. Pour in wine and allow to cook for 3 minutes.", "Sprinkle mushrooms with flour, mix well and cook for 2 minutes. Add stock, mix again and bring to a boil. Reduce heat to low-medium heat, season with salt, pepper and crumbled bouillon cubes.", "Cover and allow to simmer for 10-15 minutes, while occasionally stirring, until thickened.", "Reduce heat to low, stir in cream or half and half. Allow to gently simmer (do not boil). Adjust salt and pepper to your taste.", "Mix in parsley and remaining thyme. Serve warm."],
+      directions: ["Heat butter and oil in a large pot over medium-high heat until melted. Sauté onion for 2 to 3 minutes until softened. Cook garlic until fragrant, about 1 minute.", "Add mushrooms and 2 teaspoons thyme, cook for 5 minutes. Pour in wine and allow to cook for 3 minutes.", "Sprinkle mushrooms with flour, mix well and cook for 2 minutes. Add stock, mix again and bring to a boil. Reduce heat to low-medium heat, season with salt, pepper and crumbled bouillon cubes.", "Cover and allow to simmer for 10-15 minutes, while occasionally stirring, until thickened.", "Reduce heat to low, stir in cream or half and half. Allow to gently simmer (do not boil). Adjust salt and pepper to your taste.", "Mix in parsley and remaining thyme. Serve warm."],
       img: mushroomCreamSoupImg
     }
     ]
@@ -74,7 +74,7 @@ class App extends Component {
           ingredients={recipes.ingredients.map((ingredient) => {
             return <li> {ingredient.quantity + " " + ingredient.unitOfMeasurement + " of " + ingredient.ingredient}</li>
           })}  
-          instructions={recipes.instructions.map((instruction) => {
+          directions={recipes.directions.map((instruction) => {
             return <li>{instruction}</li>
           })}
           key={recipes.id}

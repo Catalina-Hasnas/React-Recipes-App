@@ -4,8 +4,8 @@ import './NewRecipe.css'
 
 class NewRecipe extends Component {
     state = {
-        ingredients: [],
         name: "",
+        ingredients: [],
         currentIngredient: 
             {
             id: "",
@@ -59,7 +59,7 @@ class NewRecipe extends Component {
           console.log(ingredients);
     }
 
-    handleButtonClick = () => {
+    resetIngredient = () => {
         this.form.reset() 
       }
 
@@ -115,7 +115,7 @@ class NewRecipe extends Component {
                                     <input onChange={(event, propertyName="ingredient") => this.handleIngredientChange(event, propertyName)} name="ingredient" type="text" placeholder="potatoes" />
                                 </div>
                                 <div className="col-lg-3 align-self-center">
-                                    <button onClick={(event) => this.handleButtonClick(event)} className="button ingr-button" type="submit"> Submit ingredient </button> 
+                                    <button onClick={(event) => this.resetIngredient(event)} className="button ingr-button" type="submit"> Submit ingredient </button> 
                                 </div>
                             </div>
                         </div>
@@ -138,7 +138,9 @@ class NewRecipe extends Component {
                             return <li key={ingredient.id}> {ingredient.quantity + " " + ingredient.unitOfMeasurement + " of " + ingredient.ingredient} </li>
                         })} 
                     </ul>
-                    <p>Directions: {this.state.directions} </p>
+                    <p> Directions: 
+                        {this.state.directions}
+                    </p>
                 </div>
 
                 
