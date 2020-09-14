@@ -4,15 +4,15 @@ import './NewRecipe.css'
 
 class NewRecipe extends Component {
     state = {
+        ingredients: [],
         name: "",
-        ingredients : [
+        currentIngredient: 
             {
             id: "",
             quantity: 0,
             unitOfMeasurement: "pieces",
             ingredient: ""
-            }
-        ],
+            },
         directions: "",
         img: ""
     };
@@ -28,30 +28,40 @@ class NewRecipe extends Component {
     }
 
     handleIngredientChange(event, propertyName) {
-        const ingredient = {
-            ...this.state.ingredients[0]
+        let currentIngredient = {
+            ...this.state.currentIngredient
         };
-        ingredient[propertyName] = event.target.value;
-        let ingredients = [...this.state.ingredients];
-        ingredients[0] = ingredient;
+        currentIngredient[propertyName] = event.target.value;
+        currentIngredient.id = Date.now();
+        
+        // let ingredients = this.state.ingredients;
+        // ingredients[0] = ingredient;
+        
         this.setState({ 
-            ingredients: ingredients
+            currentIngredient: currentIngredient
         });
     }
 
     addIngredient(event) {
         event.preventDefault();
-        let ingredients = [...this.state.ingredients];
-        let newIngredient = {
-            id: Date.now(),
-            quantity: ingredients.quantity,
-            unitOfMeasurement: ingredients.unitOfMeasurement,
-            ingredient: ingredients.ingredient,
-        };
+        let newIngredient = this.state.currentIngredient;
+        const ingredients = [...this.state.ingredients, newIngredient]
           this.setState({
-            ingredients: [...this.state.ingredients, newIngredient]
+            ingredients: ingredients,
+            currentIngredient: {
+                id: "",
+                quantity: 0,
+                unitOfMeasurement: "pieces",
+                ingredient: ""  
+            }
           })
+
+          console.log(ingredients);
     }
+
+    handleButtonClick = () => {
+        this.form.reset() 
+      }
 
 
     // handleSubmit(event) {
@@ -82,7 +92,7 @@ class NewRecipe extends Component {
                         </div>
                     </div>
 
-                    <form onSubmit={(event) => {this.addIngredient(event)}}>
+                    <form ref={form => this.form = form} onSubmit={(event) => {this.addIngredient(event)}}>
                         <div className="form-row">
                             <div className="d-flex flex-row flex-wrap align-items-center">
                                 <div className="fivepxpadding  form-group col-lg-3">
@@ -105,7 +115,7 @@ class NewRecipe extends Component {
                                     <input onChange={(event, propertyName="ingredient") => this.handleIngredientChange(event, propertyName)} name="ingredient" type="text" placeholder="potatoes" />
                                 </div>
                                 <div className="col-lg-3 align-self-center">
-                                    <button className="button ingr-button" type="submit"> Submit ingredient </button> 
+                                    <button onClick={(event) => this.handleButtonClick(event)} className="button ingr-button" type="submit"> Submit ingredient </button> 
                                 </div>
                             </div>
                         </div>
@@ -124,8 +134,8 @@ class NewRecipe extends Component {
                 <div> 
                     <h2> Name: {this.state.name} </h2>
                     <ul> Ingredients: 
-                        {this.state.ingredients.map((ingredient, index) => {
-                            return <li key={index}> {ingredient.quantity + " " + ingredient.unitOfMeasurement + " of " + ingredient.ingredient} </li>
+                        {this.state.ingredients.map((ingredient) => {
+                            return <li key={ingredient.id}> {ingredient.quantity + " " + ingredient.unitOfMeasurement + " of " + ingredient.ingredient} </li>
                         })} 
                     </ul>
                     <p>Directions: {this.state.directions} </p>
