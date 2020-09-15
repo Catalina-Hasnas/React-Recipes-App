@@ -74,8 +74,8 @@ class App extends Component {
           ingredients={recipes.ingredients.map((ingredient) => {
             return <li> {ingredient.quantity + " " + ingredient.unitOfMeasurement + " of " + ingredient.ingredient}</li>
           })}  
-          directions={recipes.directions.map((instruction) => {
-            return <li>{instruction}</li>
+          directions={recipes.directions.map((direction) => {
+            return <li>{direction}</li>
           })}
           key={recipes.id}
           />

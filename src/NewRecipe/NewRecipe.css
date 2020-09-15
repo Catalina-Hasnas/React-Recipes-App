@@ -115,3 +115,11 @@
 .fivepxpadding {
     padding-left: 5px;
 }
+
+.delete-button {
+    color: crimson;
+}
+
+.delete-button:hover, .delete-button:active, .delete-button:focus {
+    color: #bb1133;
+}

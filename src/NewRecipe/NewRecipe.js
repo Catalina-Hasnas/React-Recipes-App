@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import './NewRecipe.css' 
+import './NewRecipe.css'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faTrash} from '@fortawesome/free-solid-svg-icons'
 
 
 class NewRecipe extends Component {
@@ -25,6 +27,8 @@ class NewRecipe extends Component {
         this.setState({
             [name]: value
         });  
+
+        console.log(this.state)
     }
 
     handleIngredientChange(event, propertyName) {
@@ -63,13 +67,20 @@ class NewRecipe extends Component {
         this.form.reset() 
       }
 
+    deleteIngredient(id){
+        const ingredients = [...this.state.ingredients];
+        const ingredientIndex = this.state.ingredients.findIndex(ingredient => {
+            return ingredient.id === id;
+        });
+        ingredients.splice(ingredientIndex,1);
+        this.setState( {ingredients: ingredients} );
+        }
 
     // handleSubmit(event) {
     //     alert('A name was submitted: ' + this.state.name);
     //     event.preventDefault();
     //   }
 
-    
     render() {
         return (    
             <div className="container text-center">
@@ -80,15 +91,17 @@ class NewRecipe extends Component {
 
                     
                     <div className="form-row d-flex align-items-center flex-wrap">
-                        <div className="col-lg-8 form-group d-flex flex-column align-items-center">
+                        <div className="col-lg-7 form-group d-flex flex-column align-items-center">
                             <label for="name">Recipe name:</label>
                             <input onChange={(event) => this.handleChange(event)} name="name" type="text" placeholder="Mashed potatoes"/>
                         </div>
                     
 
-                        <div className="mt-4 col-lg-4 form-group">
-                            <input type="file" name="file-3[]" id="file-3" className="inputfile inputfile-3" />
-                            <label for="file-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Upload an image&hellip;</span></label>
+                        <div className="col-lg-5 form-group">
+                            {/* <input type="file" name="file-3[]" id="file-3" className="inputfile inputfile-3" />
+                            <label for="file-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Upload an image&hellip;</span></label> */}
+                            <label for="url">Recipe image URL</label>
+                            <input onChange={(event) => this.handleChange(event)} type="url" name="img" placeholder="https://i.ibb.co/xgbxQHW/greek-salad.jpg"/>
                         </div>
                     </div>
 
@@ -126,21 +139,25 @@ class NewRecipe extends Component {
                     </div>
 
                     <button className="button submit-button col-lg-3" type="submit"> Submit recipe </button>
-
+                    
                 </form>
             
-
-                 
                 <div> 
+                    <h1 className="text-muted">Preview:</h1>
                     <h2> Name: {this.state.name} </h2>
                     <ul> Ingredients: 
                         {this.state.ingredients.map((ingredient) => {
-                            return <li key={ingredient.id}> {ingredient.quantity + " " + ingredient.unitOfMeasurement + " of " + ingredient.ingredient} </li>
+                            return <li key={ingredient.id}> {ingredient.quantity + " " + ingredient.unitOfMeasurement + " of " + ingredient.ingredient} 
+                                        <FontAwesomeIcon onClick={(event, id=ingredient.id) => this.deleteIngredient(event, id)} className="ml-2 delete-button" icon={faTrash}/>
+                                    </li>
                         })} 
                     </ul>
-                    <p> Directions: 
-                        {this.state.directions}
-                    </p>
+                    <ol> Directions:
+                        {this.state.directions.split('\n').map(direction => {
+                            return <li>{direction}</li>
+                        })}
+                    </ol>
+                    <img src={this.state.img} alt="please try another link"/>
                 </div>
 
                 
