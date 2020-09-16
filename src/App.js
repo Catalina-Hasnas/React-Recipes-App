@@ -62,6 +62,14 @@ class App extends Component {
       img: mushroomCreamSoupImg
     }
     ]
+  };
+
+  userRecipe(userRecipe) {
+    let recipes = [...this.state.recipes, userRecipe];
+    this.setState({
+      recipes: recipes
+    });
+    console.log(recipes);
   }
 
   render() {
@@ -83,6 +91,8 @@ class App extends Component {
       </div>
     );
 
+   
+
     return (
       <div className="App">
         <header className="py-3">
@@ -94,7 +104,8 @@ class App extends Component {
 
         {recipes}
 
-        <NewRecipe />
+        <NewRecipe
+          userRecipe={(userRecipe) => this.userRecipe(userRecipe)}/>
 
       </div>
     );

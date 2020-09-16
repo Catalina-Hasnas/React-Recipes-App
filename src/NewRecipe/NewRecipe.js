@@ -27,8 +27,6 @@ class NewRecipe extends Component {
         this.setState({
             [name]: value
         });  
-
-        console.log(this.state)
     }
 
     handleIngredientChange(event, propertyName) {
@@ -37,9 +35,6 @@ class NewRecipe extends Component {
         };
         currentIngredient[propertyName] = event.target.value;
         currentIngredient.id = Date.now();
-        
-        // let ingredients = this.state.ingredients;
-        // ingredients[0] = ingredient;
         
         this.setState({ 
             currentIngredient: currentIngredient
@@ -59,8 +54,6 @@ class NewRecipe extends Component {
                 ingredient: ""  
             }
           })
-
-          console.log(ingredients);
     }
 
     resetIngredient = () => {
@@ -75,11 +68,21 @@ class NewRecipe extends Component {
         ingredients.splice(ingredientIndex,1);
         this.setState( {ingredients: ingredients} );
         }
+    
+    
 
-    // handleSubmit(event) {
-    //     alert('A name was submitted: ' + this.state.name);
-    //     event.preventDefault();
-    //   }
+    handleSubmit(event) {
+        event.preventDefault();
+        let userRecipe = {
+            id: Date.now(),
+            name: this.state.name,
+            ingredients: [...this.state.ingredients],
+            directions: this.state.directions.split("\n"),
+            img: this.state.img
+        }
+        this.props.userRecipe(userRecipe);
+    }       
+
 
     render() {
         return (    
@@ -138,7 +141,7 @@ class NewRecipe extends Component {
                         <textarea onChange={(event) => this.handleChange(event)} name="directions" type="text" placeholder="Recipe directions..."/>
                     </div>
 
-                    <button className="button submit-button col-lg-3" type="submit"> Submit recipe </button>
+                    <button onClick={(event) => this.handleSubmit(event)} className="button submit-button col-lg-3" type="submit"> Submit recipe </button>
                     
                 </form>
             
@@ -157,7 +160,8 @@ class NewRecipe extends Component {
                             return <li>{direction}</li>
                         })}
                     </ol>
-                    <img src={this.state.img} alt="please try another link"/>
+                    <p>Image:</p>
+                    <img style={{maxHeight: 525}} src={this.state.img} alt="please try another link"/>
                 </div>
 
                 
@@ -173,9 +177,6 @@ class NewRecipe extends Component {
     }
 }
 
-// const NewRecipe = () => {
-//     return <NewRecipe />
-// }
 
 
 export default NewRecipe; 
