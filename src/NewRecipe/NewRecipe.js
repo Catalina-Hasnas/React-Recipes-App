@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './NewRecipe.css'; 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons'
 
 
@@ -57,7 +57,7 @@ class NewRecipe extends Component {
     }
 
     resetIngredient = () => {
-        this.form.reset() 
+        this.ingredient.reset() 
       }
 
     deleteIngredient(id){
@@ -68,11 +68,10 @@ class NewRecipe extends Component {
         ingredients.splice(ingredientIndex,1);
         this.setState( {ingredients: ingredients} );
         }
-    
-    
 
     handleSubmit(event) {
         event.preventDefault();
+
         let userRecipe = {
             id: Date.now(),
             name: this.state.name,
@@ -81,16 +80,25 @@ class NewRecipe extends Component {
             img: this.state.img
         }
         this.props.userRecipe(userRecipe);
+
+        this.form.reset();
+
+        this.setState({
+            name: "",
+            ingredients: [],
+            directions: "",
+            img: ""  
+          })
     }       
 
 
     render() {
         return (    
-            <div className="container text-center">
+            <div  className="container text-center">
                 <h2 className="text-monospace"> Upload your own recipe </h2>
 
             
-                <form className="form background-primary p-3 mt-4">
+                <form ref={form => this.form = form} className="form background-primary p-3 mt-4">
 
                     
                     <div className="form-row d-flex align-items-center flex-wrap">
@@ -103,12 +111,12 @@ class NewRecipe extends Component {
                         <div className="col-lg-5 form-group">
                             {/* <input type="file" name="file-3[]" id="file-3" className="inputfile inputfile-3" />
                             <label for="file-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Upload an image&hellip;</span></label> */}
-                            <label for="url">Recipe image URL</label>
+                            <label for="url">Image URL</label>
                             <input onChange={(event) => this.handleChange(event)} type="url" name="img" placeholder="https://i.ibb.co/xgbxQHW/greek-salad.jpg"/>
                         </div>
                     </div>
 
-                    <form ref={form => this.form = form} onSubmit={(event) => {this.addIngredient(event)}}>
+                    <form ref={ingredient => this.ingredient = ingredient} onSubmit={(event) => {this.addIngredient(event)}}>
                         <div className="form-row">
                             <div className="d-flex flex-row flex-wrap align-items-center">
                                 <div className="fivepxpadding  form-group col-lg-3">

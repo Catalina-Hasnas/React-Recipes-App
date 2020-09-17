@@ -12,7 +12,7 @@ import mushroomCreamSoupImg from "./img/mushroom-cream-soup.jpg";
 class App extends Component {
   state = {
     recipes: [
-      {id: "01", 
+      {id: Date.now(), 
       name: "Avocado Toast", 
       ingredients: [ 
         {quantity: 0.5, unitOfMeasurement: "pieces", ingredient: "avocado"}, 
@@ -25,7 +25,7 @@ class App extends Component {
       directions: ["In a small bowl, combine avocado, lemon juice, salt, and pepper. Gently mash with the back of a fork.", "Top toasted bread with mashed avocado mixture. Drizzle with olive oil and sprinkle over desired toppings."],
       img: avocadoToastImg
     },
-      {id: "02",
+      {id: Date.now(),
       name: "Greek Salad",
       ingredients: [ 
         {quantity: 1, unitOfMeasurement: "pieces", ingredient: "cucumber"},
@@ -42,7 +42,7 @@ class App extends Component {
       directions: ["Place the cucumber, peppers, tomatoes and red onion in a large bowl.", "For the vinaigrette, whisk together the garlic, oregano, mustard, vinegar, salt and pepper in a small bowl. Still whisking, slowly add the olive oil to make an emulsion. Pour the vinaigrette over the vegetables. Add the feta and olives and toss lightly. Set aside for 30 minutes to allow the flavors to blend. Serve at room temperature."],
       img: greekSaladImg
     },
-      {id: "03",
+      {id: Date.now(),
       name: "Mushroom Cream Soup",
       ingredients: [
         {quantity: 4, unitOfMeasurement: "tablespoons", ingredient: "butter"}, 
@@ -72,6 +72,16 @@ class App extends Component {
     console.log(recipes);
   }
 
+  deleteRecipe(event, id){
+    event.preventDefault();
+    let recipes = [...this.state.recipes];
+    const recipesIndex = this.state.recipes.findIndex(recipe => {
+        return recipe.id === id;
+    });
+    recipes.splice(recipesIndex,1);
+    this.setState( {recipes: recipes} );
+  }
+
   render() {
     let recipes = (
       <div>
@@ -86,6 +96,7 @@ class App extends Component {
             return <li>{direction}</li>
           })}
           key={recipes.id}
+          delete={(event) => this.deleteRecipe(event, recipes.id)}
           />
         })}
       </div>

@@ -10,3 +10,20 @@ hr {
     margin-left: 12rem;
     margin-right: 12rem;
 }
+
+.delete-recipe {
+    background-color: crimson;
+    color: #FFFFFF;
+    border: 0;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 16px;
+    outline: 0;
+    padding: 6px;
+    }
+.delete-recipe:hover, .delete-recipe:active, .delete-recipe:focus {
+    background-color: #bb1133;
+    color: white;
+}
