@@ -69,7 +69,6 @@ class App extends Component {
     this.setState({
       recipes: recipes
     });
-    console.log(recipes);
   }
 
   deleteRecipe(event, id){
@@ -101,8 +100,6 @@ class App extends Component {
         })}
       </div>
     );
-
-   
 
     return (
       <div className="App">
