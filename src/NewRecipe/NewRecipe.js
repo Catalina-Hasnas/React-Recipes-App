@@ -36,12 +36,19 @@ class NewRecipe extends Component {
         const { name, value } = event.target;
         let errors = this.state.errors;
 
-        switch (name) {
-            case 'name': 
-              errors.name = 
-                value.length >= 4 && RegExp(/^[a-zA-Z\s]*$/).test(value)
-                  ? ''
-                  : 'Name must be at least 4 characters long and it must not contain any numbers';
+        let noSpace = value.replace(/ /g,"");
+        let length = noSpace.length;
+
+        if (name === 'name') {
+            if (RegExp(/^[a-zA-Z\s]*$/).test(value)) {
+                if (length < 4 || length >= 30) {
+                    errors.name='Name must be between 4 and 30 characters'
+                } else if (length >=4 && length < 30) {
+                    errors.name=''
+                }
+            } else {
+                errors.name = 'Name must not contain any numbers'
+            }
         }
 
         this.setState({
@@ -53,28 +60,37 @@ class NewRecipe extends Component {
         let currentIngredient = {
             ...this.state.currentIngredient
         };
-        const value = event.target.value;
-        const name = event.target.name;
+        const { name, value } = event.target;
         currentIngredient[propertyName] = value;
         currentIngredient.id = Date.now();
         let errors = this.state.errors;
 
-        switch (name) {
-            case 'quantity': 
-              errors.quantity = 
-                value.length <= 4 && RegExp(/^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$/).test(value)
-                  ? ''
-                  : 'Quantity must be less than 4 characters long and must be a number greater than 0';
-                  break;
+        let noSpace = value.replace(/ /g,"");
+        let length = noSpace.length;
 
-            case 'ingredient': 
-            errors.ingredient = 
-            value.length >= 3 && RegExp(/^[a-zA-Z\s]*$/).test(value)
-                ? ''
-                : 'Ingredient must be at least 3 characters long and must not contain any numbers';
-                break;      
-        }
-        
+       if (name === 'quantity') {
+           if (RegExp(/^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$/).test(value)) {
+               if (length >= 4) {
+                   errors.quantity = "Quantity can't have more than 4 digits"
+               } else if (length < 4) {
+                   errors.quantity = ''
+               }
+           } else {
+               errors.quantity = 'Quantity must be a number greater than 0'
+           }
+       }
+
+       if (name === 'ingredient') {
+           if (RegExp(/^[a-zA-Z\s]*$/).test(value)) {
+               if (length < 3) {
+                   errors.ingredient = 'Ingredient must have at least 3 characters'
+               } else if (length >=3) {
+                   errors.ingredient = ''
+               }
+           } else {
+               errors.ingredient = 'Ingredient must not contain any numbers'
+           }
+       }
         this.setState({ 
             errors, currentIngredient: currentIngredient
         })
@@ -157,8 +173,8 @@ class NewRecipe extends Component {
 
                         <div className="col-lg-5 form-group">
                             {/* <input type="file" name="file-3[]" id="file-3" className="inputfile inputfile-3" />
-                            <label for="file-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Upload an image&hellip;</span></label> */}
-                            <label for="url">Image URL</label>
+                            <label htmlFor="file-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Upload an image&hellip;</span></label> */}
+                            <label htmlFor="url">Image URL</label>
                             <input onChange={(event) => this.handleChange(event)} type="url" name="img" placeholder="https://i.ibb.co/xgbxQHW/greek-salad.jpg"/>
                         </div>
                     </div>
@@ -176,7 +192,7 @@ class NewRecipe extends Component {
                                     <input onChange={(event, propertyName="quantity") => this.handleIngredientChange(event, propertyName)} name="quantity" type="number" placeholder="6" noValidate/>
                                 </div>
                                 <div className="form-group col-lg-3">
-                                    <label for="unitOfMeasurement">Unit of measurement:</label>
+                                    <label htmlFor="unitOfMeasurement">Unit of measurement:</label>
                                     <select className="p-2" onChange={(event, propertyName="unitOfMeasurement") => this.handleIngredientChange(event, propertyName)} name="unitOfMeasurement" id="metric" name="metric">
                                         <option value="pieces">pieces</option>
                                         <option value="miligrams">miligrams</option>
@@ -223,12 +239,12 @@ class NewRecipe extends Component {
                         })} 
                     </ul>
                     <ol> Directions:
-                        {this.state.directions.split('\n').map(direction => {
-                            return <li>{direction}</li>
+                        {this.state.directions.split('\n').map((direction, index) => {
+                            return <li key={index}>{direction}</li>
                         })}
                     </ol>
                     <p>Image:</p>
-                    <img style={{maxHeight: 525}} src={this.state.img} alt="please try another link"/>
+                    <img className="img-fluid" src={this.state.img} alt="please try another link"/>
                 </div>
 
                 

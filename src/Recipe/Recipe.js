@@ -1,5 +1,7 @@
 import React from 'react';
 import './Recipe.css';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
 
 
 const recipe = (props) => {
@@ -8,7 +10,7 @@ const recipe = (props) => {
             <div className="container background-primary pb-3">
                 <div className="d-flex flex-row justify-content-center align-items-center">
                     <h2 className="flex-grow-1 p-3 font-weight-bold text-monospace text-center"><span className="border-top border-bottom border-dark">{props.name}</span></h2>
-                        <button onClick={props.delete} className="delete-recipe">  Delete Recipe </button>
+                    <FontAwesomeIcon onClick={props.delete} className="delete-recipe mr-3" icon={faTimes}/>
                 </div>
 
                 <div className="d-flex flex-row flex-wrap justify-content-between align-items-center">

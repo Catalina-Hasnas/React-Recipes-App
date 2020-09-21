@@ -12,7 +12,7 @@ import mushroomCreamSoupImg from "./img/mushroom-cream-soup.jpg";
 class App extends Component {
   state = {
     recipes: [
-      {id: Date.now(), 
+      {id: "01", 
       name: "Avocado Toast", 
       ingredients: [ 
         {quantity: 0.5, unitOfMeasurement: "pieces", ingredient: "avocado"}, 
@@ -25,7 +25,7 @@ class App extends Component {
       directions: ["In a small bowl, combine avocado, lemon juice, salt, and pepper. Gently mash with the back of a fork.", "Top toasted bread with mashed avocado mixture. Drizzle with olive oil and sprinkle over desired toppings."],
       img: avocadoToastImg
     },
-      {id: Date.now(),
+      {id: "02",
       name: "Greek Salad",
       ingredients: [ 
         {quantity: 1, unitOfMeasurement: "pieces", ingredient: "cucumber"},
@@ -42,7 +42,7 @@ class App extends Component {
       directions: ["Place the cucumber, peppers, tomatoes and red onion in a large bowl.", "For the vinaigrette, whisk together the garlic, oregano, mustard, vinegar, salt and pepper in a small bowl. Still whisking, slowly add the olive oil to make an emulsion. Pour the vinaigrette over the vegetables. Add the feta and olives and toss lightly. Set aside for 30 minutes to allow the flavors to blend. Serve at room temperature."],
       img: greekSaladImg
     },
-      {id: Date.now(),
+      {id: "03",
       name: "Mushroom Cream Soup",
       ingredients: [
         {quantity: 4, unitOfMeasurement: "tablespoons", ingredient: "butter"}, 
@@ -88,11 +88,11 @@ class App extends Component {
           return <Recipe 
           name={recipes.name}
           img={recipes.img}  
-          ingredients={recipes.ingredients.map((ingredient) => {
-            return <li> {ingredient.quantity + " " + ingredient.unitOfMeasurement + " of " + ingredient.ingredient}</li>
+          ingredients={recipes.ingredients.map((ingredient, index) => {
+            return <li key={index}> {ingredient.quantity + " " + ingredient.unitOfMeasurement + " of " + ingredient.ingredient}</li>
           })}  
-          directions={recipes.directions.map((direction) => {
-            return <li>{direction}</li>
+          directions={recipes.directions.map((direction, index) => {
+            return <li key={index}>{direction}</li>
           })}
           key={recipes.id}
           delete={(event) => this.deleteRecipe(event, recipes.id)}
