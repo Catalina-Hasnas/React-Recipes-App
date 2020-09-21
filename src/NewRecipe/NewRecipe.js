@@ -3,7 +3,7 @@ import './NewRecipe.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons'
 
-const validateForm = (errors) => {
+const validateForm = (...errors) => {
     let valid = true;
     Object.values(errors).forEach(
         // if we have an error string set valid to false
@@ -19,7 +19,7 @@ class NewRecipe extends Component {
         currentIngredient: 
             {
             id: "",
-            quantity: 0,
+            quantity: "",
             unitOfMeasurement: "pieces",
             ingredient: ""
             },
@@ -61,6 +61,7 @@ class NewRecipe extends Component {
             ...this.state.currentIngredient
         };
         const { name, value } = event.target;
+        
         currentIngredient[propertyName] = value;
         currentIngredient.id = Date.now();
         let errors = this.state.errors;
@@ -82,8 +83,8 @@ class NewRecipe extends Component {
 
        if (name === 'ingredient') {
            if (RegExp(/^[a-zA-Z\s]*$/).test(value)) {
-               if (length < 3) {
-                   errors.ingredient = 'Ingredient must have at least 3 characters'
+               if (length < 3 || length >= 30) {
+                   errors.ingredient = 'Ingredient must be between 3 and 30 characters'
                } else if (length >=3) {
                    errors.ingredient = ''
                }
@@ -99,12 +100,23 @@ class NewRecipe extends Component {
     addIngredient(event) {
         event.preventDefault();
         let newIngredient = this.state.currentIngredient;
-        const ingredients = [...this.state.ingredients, newIngredient]
+        let ingredients = [...this.state.ingredients];
+
+        if (newIngredient.quantity !== "" && newIngredient.ingredient !== "") {
+            if(validateForm(this.state.errors.quantity, this.state.errors.ingredient)) {
+                ingredients = [...this.state.ingredients, newIngredient]
+            } else {
+                alert ('Invalid Ingredient')
+            }
+        } else {
+            alert ("Ingredient can't be empty")
+        }
+
           this.setState({
             ingredients: ingredients,
             currentIngredient: {
                 id: "",
-                quantity: 0,
+                quantity: "",
                 unitOfMeasurement: "pieces",
                 ingredient: ""  
             }
@@ -127,30 +139,33 @@ class NewRecipe extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        if(validateForm(this.state.errors)) {
-            console.info('Valid Form')
-          }else{
-            console.error('Invalid Form')
-          }
-        
+        if (this.state.name !== "") {
+            if(validateForm(this.state.errors)) {
 
-        let userRecipe = {
-            id: Date.now(),
-            name: this.state.name,
-            ingredients: [...this.state.ingredients],
-            directions: this.state.directions.split("\n"),
-            img: this.state.img
+                let userRecipe = {
+                    id: Date.now(),
+                    name: this.state.name,
+                    ingredients: [...this.state.ingredients],
+                    directions: this.state.directions.split("\n"),
+                    img: this.state.img
+                }
+                this.props.userRecipe(userRecipe);
+
+                this.form.reset();
+
+                this.setState({
+                    name: "",
+                    ingredients: [],
+                    directions: "",
+                    img: ""  
+                })
+
+            } else {
+                alert('Invalid Form')
+            }
+        } else {
+            alert("You can't leave name empty")
         }
-        this.props.userRecipe(userRecipe);
-
-        this.form.reset();
-
-        this.setState({
-            name: "",
-            ingredients: [],
-            directions: "",
-            img: ""  
-          })
     } 
        
     render() {
@@ -168,7 +183,7 @@ class NewRecipe extends Component {
                     <div className="form-row d-flex align-items-center flex-wrap">
                         <div className="col-lg-7 form-group d-flex flex-column align-items-center">
                             <label htmlFor="name">Recipe name:</label>
-                            <input onChange={(event) => this.handleChange(event)} name="name" type="text" placeholder="Mashed potatoes" noValidate/>
+                            <input onChange={(event) => this.handleChange(event)} name="name" type="text" placeholder="Mashed potatoes" noValidate required/>
                         </div>
 
                         <div className="col-lg-5 form-group">
@@ -189,7 +204,7 @@ class NewRecipe extends Component {
                             <div className="d-flex flex-row flex-wrap align-items-center">
                                 <div className="fivepxpadding  form-group col-lg-3">
                                     <label htmlFor="quantity">Quantity:</label>
-                                    <input onChange={(event, propertyName="quantity") => this.handleIngredientChange(event, propertyName)} name="quantity" type="number" placeholder="6" noValidate/>
+                                    <input onChange={(event, propertyName="quantity") => this.handleIngredientChange(event, propertyName)} name="quantity" type="" placeholder="6" noValidate required/>
                                 </div>
                                 <div className="form-group col-lg-3">
                                     <label htmlFor="unitOfMeasurement">Unit of measurement:</label>
@@ -204,7 +219,7 @@ class NewRecipe extends Component {
                                 </div>
                                 <div className="form-group col-lg-3">
                                     <label htmlFor="ingredient">Ingredient:</label>
-                                    <input onChange={(event, propertyName="ingredient") => this.handleIngredientChange(event, propertyName)} name="ingredient" type="text" placeholder="potatoes" noValidate/>
+                                    <input onChange={(event, propertyName="ingredient") => this.handleIngredientChange(event, propertyName)} name="ingredient" type="text" placeholder="potatoes" noValidate required/>
                                 </div>
                                 <div className="col-lg-3 align-self-center">
                                     <button onClick={(event) => this.resetIngredient(event)} className="button ingr-button" type="submit"> Submit ingredient </button> 
@@ -229,7 +244,7 @@ class NewRecipe extends Component {
                 </form>
             
                 <div> 
-                    <h1 className="text-muted">Preview:</h1>
+                    <h2 className="text-muted">Preview:</h2>
                     <h2> Name: {this.state.name} </h2>
                     <ul> Ingredients: 
                         {this.state.ingredients.map((ingredient) => {
