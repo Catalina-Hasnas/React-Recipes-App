@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './NewRecipe.css'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons'
+import { Responsive } from "../Responsive";
 
 const validateForm = (...errors) => {
     let valid = true;
@@ -29,6 +30,7 @@ class NewRecipe extends Component {
             name: '',
             quantity: '',
             ingredient: '',
+            directions: ''
         }
     };
     
@@ -48,6 +50,14 @@ class NewRecipe extends Component {
                 }
             } else {
                 errors.name = 'Name must not contain any numbers'
+            }
+        }
+
+        if (name === 'directions') {
+            if (length <10 || length >= 500) {
+                errors.directions='Directions must be between 10 and 1000 characters'
+            } else if (length >=10 && length <1000) {
+                errors.directions=''
             }
         }
 
@@ -140,7 +150,7 @@ class NewRecipe extends Component {
         event.preventDefault();
 
         if (this.state.name !== "" && this.state.directions !== "" && this.state.ingredients.length>=1) {
-            if(validateForm(this.state.errors.name)) {
+            if(validateForm(this.state.errors.name, this.state.errors.directions)) {
 
                 let userRecipe = {
                     id: Date.now(),
@@ -161,10 +171,10 @@ class NewRecipe extends Component {
                 })
 
             } else {
-                alert('Invalid Form')
+                alert('Invalid form. Please check the warnings and try again.')
             }
         } else {
-            alert("You can't leave any field empty")
+            alert('Invalid form. Please make sure to add a name, at least one ingredient and direction.')
         }
     } 
        
@@ -194,10 +204,12 @@ class NewRecipe extends Component {
                         </div>
                     </div>
 
+                <Responsive displayIn={["Laptop"]}>
                     <div>
                         {errors.name.length > 0 && 
                             <small className="text-danger">{errors.name}</small>}
                     </div>
+                </Responsive>
 
                     <form ref={ingredient => this.ingredient = ingredient} onSubmit={(event) => {this.addIngredient(event)}} noValidate>
                         <div className="form-row">
@@ -225,15 +237,39 @@ class NewRecipe extends Component {
                                     <button onClick={(event) => this.resetIngredient(event)} className="button ingr-button" type="submit"> Submit ingredient </button> 
                                 </div>
                             </div>
+
+                        <div className="d-flex flex-column align-items-start">
+
+                            <Responsive displayIn={["Tablet"], ["Mobile"]}>
+                                <div>
+                                    {errors.name.length > 0 && 
+                                        <small className="text-danger">{errors.name}</small>}
+                                </div>
+                            </Responsive>
+
+
                             <div>
                                 {errors.quantity.length > 0 && 
-                                    <small className="text-danger text-center">{errors.quantity}</small>}
-                                    <br/>
+                                    <small className="text-danger">{errors.quantity}</small>}   
+                            </div>
+
+
+                            <div>
                                 {errors.ingredient.length > 0 && 
-                                    <small className="text-danger text-center">{errors.ingredient}</small>}
+                                    <small className="text-danger">{errors.ingredient}</small>}
+                            </div>
+
+                            <div>
+                                {errors.directions.length > 0 && 
+                                    <small className="text-danger">{errors.directions}</small>}
                             </div>
                         </div>
+                        </div>
                     </form>
+
+                    
+
+                    
 
                     <div className="form-group mt-3">
                         <textarea onChange={(event) => this.handleChange(event)} name="directions" type="text" placeholder="Recipe directions..."/>
