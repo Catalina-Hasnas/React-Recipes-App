@@ -139,8 +139,8 @@ class NewRecipe extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        if (this.state.name !== "") {
-            if(validateForm(this.state.errors)) {
+        if (this.state.name !== "" && this.state.directions !== "" && this.state.ingredients.length>=1) {
+            if(validateForm(this.state.errors.name)) {
 
                 let userRecipe = {
                     id: Date.now(),
@@ -164,13 +164,13 @@ class NewRecipe extends Component {
                 alert('Invalid Form')
             }
         } else {
-            alert("You can't leave name empty")
+            alert("You can't leave any field empty")
         }
     } 
        
     render() {
 
-        const {errors, formValid} = this.state;
+        const {errors} = this.state;
 
         return (    
             <div  className="container text-center">
