@@ -1,6 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
 import React, { Component } from 'react';
 import Recipe from "./Recipe/Recipe";
 import NewRecipe from "./NewRecipe/NewRecipe";
@@ -64,7 +62,7 @@ class App extends Component {
     ]
   };
 
-  userRecipe(userRecipe) {
+  addUserRecipe(userRecipe) {
     let recipes = [...this.state.recipes, userRecipe];
     this.setState({
       recipes: recipes
@@ -113,7 +111,7 @@ class App extends Component {
         {recipes}
 
         <NewRecipe
-          userRecipe={(userRecipe) => this.userRecipe(userRecipe)}/>
+          addUserRecipe={(userRecipe) => this.addUserRecipe(userRecipe)}/>
 
       </div>
     );

@@ -159,7 +159,7 @@ class NewRecipe extends Component {
                     directions: this.state.directions.split("\n"),
                     img: this.state.img
                 }
-                this.props.userRecipe(userRecipe);
+                this.props.addUserRecipe(userRecipe);
 
                 this.form.reset();
 
@@ -186,9 +186,7 @@ class NewRecipe extends Component {
             <div  className="container text-center">
                 <h2 className="text-monospace"> Upload your own recipe </h2>
 
-            
                 <form ref={form => this.form = form} className="form background-primary p-3 mt-4">
-
                     
                     <div className="form-row d-flex align-items-center flex-wrap">
                         <div className="col-lg-7 form-group d-flex flex-column align-items-center">
@@ -204,12 +202,12 @@ class NewRecipe extends Component {
                         </div>
                     </div>
 
-                <Responsive displayIn={["Laptop"]}>
-                    <div>
-                        {errors.name.length > 0 && 
-                            <small className="text-danger">{errors.name}</small>}
-                    </div>
-                </Responsive>
+                    <Responsive displayIn={["Laptop"]}>
+                        <div>
+                            {errors.name.length > 0 && 
+                                <small className="text-danger">{errors.name}</small>}
+                        </div>
+                    </Responsive>
 
                     <form ref={ingredient => this.ingredient = ingredient} onSubmit={(event) => {this.addIngredient(event)}} noValidate>
                         <div className="form-row">
@@ -238,7 +236,7 @@ class NewRecipe extends Component {
                                 </div>
                             </div>
 
-                        <div className="d-flex flex-column align-items-start">
+                            <div className="d-flex flex-column align-items-start">
 
                             <Responsive displayIn={["Tablet"], ["Mobile"]}>
                                 <div>
@@ -267,10 +265,6 @@ class NewRecipe extends Component {
                         </div>
                     </form>
 
-                    
-
-                    
-
                     <div className="form-group mt-3">
                         <textarea onChange={(event) => this.handleChange(event)} name="directions" type="text" placeholder="Recipe directions..."/>
                     </div>
@@ -281,7 +275,7 @@ class NewRecipe extends Component {
             
                 <div> 
                     <h2 className="text-muted">Preview:</h2>
-                    <h2> Name: {this.state.name} </h2>
+                    <p> Name: {this.state.name} </p>
                     <ul> Ingredients: 
                         {this.state.ingredients.map((ingredient) => {
                             return <li key={ingredient.id}> {ingredient.quantity + " " + ingredient.unitOfMeasurement + " of " + ingredient.ingredient} 
@@ -297,20 +291,10 @@ class NewRecipe extends Component {
                     <p>Image:</p>
                     <img className="img-fluid" src={this.state.img} alt="please try another link"/>
                 </div>
-
-                
-
-
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
             </div>
         )
     }
 }
-
 
 
 export default NewRecipe; 
