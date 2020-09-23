@@ -231,7 +231,7 @@ class NewRecipe extends Component {
                                     <label htmlFor="ingredient">Ingredient:</label>
                                     <input onChange={(event, propertyName="ingredient") => this.handleIngredientChange(event, propertyName)} name="ingredient" type="text" placeholder="potatoes" noValidate required/>
                                 </div>
-                                <div className="col-lg-3 align-self-center">
+                                <div className="col-lg-3 mt-3">
                                     <button onClick={(event) => this.resetIngredient(event)} className="button ingr-button" type="submit"> Submit ingredient </button> 
                                 </div>
                             </div>
