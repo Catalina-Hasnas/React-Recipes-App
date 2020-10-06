@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Recipe from "./Recipe/Recipe";
 import NewRecipe from "./NewRecipe/NewRecipe";
 import './App.css';
+import './NewRecipe/NewRecipe.css'; 
 import avocadoToastImg from "./img/avocado-toast.jpg";
 import greekSaladImg from "./img/greek-salad.jpg";
 import mushroomCreamSoupImg from "./img/mushroom-cream-soup.jpg";
@@ -10,7 +11,7 @@ import mushroomCreamSoupImg from "./img/mushroom-cream-soup.jpg";
 class App extends Component {
   state = {
     recipes: [
-      {id: "01", 
+      {id: 1, 
       name: "Avocado Toast", 
       ingredients: [ 
         {quantity: 0.5, unitOfMeasurement: "pieces", ingredient: "avocado"}, 
@@ -23,7 +24,7 @@ class App extends Component {
       directions: ["In a small bowl, combine avocado, lemon juice, salt, and pepper. Gently mash with the back of a fork.", "Top toasted bread with mashed avocado mixture. Drizzle with olive oil and sprinkle over desired toppings."],
       img: avocadoToastImg
     },
-      {id: "02",
+      {id: 2,
       name: "Greek Salad",
       ingredients: [ 
         {quantity: 1, unitOfMeasurement: "pieces", ingredient: "cucumber"},
@@ -40,7 +41,7 @@ class App extends Component {
       directions: ["Place the cucumber, peppers, tomatoes and red onion in a large bowl.", "For the vinaigrette, whisk together the garlic, oregano, mustard, vinegar, salt and pepper in a small bowl. Still whisking, slowly add the olive oil to make an emulsion. Pour the vinaigrette over the vegetables. Add the feta and olives and toss lightly. Set aside for 30 minutes to allow the flavors to blend. Serve at room temperature."],
       img: greekSaladImg
     },
-      {id: "03",
+      {id: 3,
       name: "Mushroom Cream Soup",
       ingredients: [
         {quantity: 4, unitOfMeasurement: "tablespoons", ingredient: "butter"}, 
@@ -62,6 +63,31 @@ class App extends Component {
     ]
   };
 
+  
+
+  initialArray = [...this.state.recipes];
+
+  componentDidMount() {
+    const json = sessionStorage.getItem('recipes')
+    const recipes = JSON.parse(json) || this.initialArray;
+    this.setState(() => ({ recipes }))
+  }
+
+  componentDidUpdate(prevProps, prevStates){
+    const json = JSON.stringify(this.state.recipes)
+    sessionStorage.setItem('recipes', json)
+  }
+
+  findPosition = (obj) => { 
+    var currenttop = 0; 
+    if (obj.offsetParent) { 
+        do { 
+            currenttop += obj.offsetTop; 
+        } while ((obj = obj.offsetParent)); 
+        return [currenttop]; 
+    }
+  }
+
   addUserRecipe(userRecipe) {
     let recipes = [...this.state.recipes, userRecipe];
     this.setState({
@@ -69,7 +95,7 @@ class App extends Component {
     });
   }
 
-  deleteRecipe(event, id){
+  deleteRecipe(event, id) {
     event.preventDefault();
     let recipes = [...this.state.recipes];
     const recipesIndex = this.state.recipes.findIndex(recipe => {
@@ -79,10 +105,20 @@ class App extends Component {
     this.setState( {recipes: recipes} );
   }
 
+  resetRecipes(event) {
+    let recipes = [...this.initialArray];
+    this.setState({
+      recipes: this.initialArray
+    });
+    console.log(recipes)
+  }
+
+
   render() {
     let recipes = (
       <div>
         {this.state.recipes.map((recipes) => {
+          const ref = React.createRef();
           return <Recipe 
           name={recipes.name}
           img={recipes.img}  
@@ -93,11 +129,25 @@ class App extends Component {
             return <li key={index}>{direction}</li>
           })}
           key={recipes.id}
+          ref={ref}
           delete={(event) => this.deleteRecipe(event, recipes.id)}
           />
         })}
       </div>
     );
+
+    let resetButton;
+
+    if (this.state.recipes.length == 0) {
+      resetButton = 
+        <div className="pb-2 d-flex flex-row justify-content-center">
+          <button onClick={(event) => this.resetRecipes(event)} className="text-center button submit-button col-lg-2">
+            Restore default
+          </button>
+        </div> 
+    }
+
+    
 
     return (
       <div className="App">
@@ -107,11 +157,15 @@ class App extends Component {
             <h5 className="font-weight-bold color-primary">For those who like to eat, but don't like to cook.</h5>
           </div>
         </header>
+        
+        {resetButton}
 
         {recipes}
 
         <NewRecipe
           addUserRecipe={(userRecipe) => this.addUserRecipe(userRecipe)}/>
+
+        
 
       </div>
     );

@@ -33,7 +33,7 @@ class NewRecipe extends Component {
             directions: ''
         }
     };
-    
+
     handleChange(event) { 
         const { name, value } = event.target;
         let errors = this.state.errors;
@@ -183,7 +183,7 @@ class NewRecipe extends Component {
         const {errors} = this.state;
 
         return (    
-            <div  className="container text-center">
+            <div className="container text-center">
                 <h2 className="text-monospace"> Upload your own recipe </h2>
 
                 <form ref={form => this.form = form} className="form background-primary p-3 mt-4">
