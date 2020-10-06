@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "3e58198bffe641204989",
+    "revision": "38d389aeaa84ca6721fe",
     "url": "/React-recipes-app/static/css/main.8b033ba4.chunk.css"
   },
   {
-    "revision": "3e58198bffe641204989",
-    "url": "/React-recipes-app/static/js/main.3e58198b.chunk.js"
+    "revision": "38d389aeaa84ca6721fe",
+    "url": "/React-recipes-app/static/js/main.38d389ae.chunk.js"
   },
   {
     "revision": "efe4d04aca11ed2815a2",
@@ -32,7 +32,7 @@ self.__precacheManifest = [
     "url": "/React-recipes-app/static/media/mushroom-cream-soup.915b5bba.jpg"
   },
   {
-    "revision": "3248d77d194f394b308ab457d77574f0",
+    "revision": "8098bf4ed5d5850fe3606f7f9350efa5",
     "url": "/React-recipes-app/index.html"
   }
 ];
