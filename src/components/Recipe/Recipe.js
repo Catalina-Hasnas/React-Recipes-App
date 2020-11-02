@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './Recipe.css';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import propTypes from 'prop-types';
 
 
 const recipe = (props) => {
     return (
-        <div>
+        <Fragment>
             <div className="container background-primary pb-3">
                 <div className="d-flex flex-row justify-content-center align-items-center">
                     <h2 className="flex-grow-1 p-3 font-weight-bold text-monospace text-center"><span className="border-top border-bottom border-dark">{props.name}</span></h2>
@@ -35,8 +36,15 @@ const recipe = (props) => {
                 </div>
             </div>
             <hr/>
-        </div>
+        </Fragment>
     )
 }
+
+recipe.propTypes = {
+    name: propTypes.string,
+    ingredients: propTypes.string,
+    directions: propTypes.string,
+    delete: propTypes.func,
+};
 
 export default recipe; 

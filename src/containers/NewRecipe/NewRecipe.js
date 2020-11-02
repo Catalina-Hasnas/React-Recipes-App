@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import './NewRecipe.css'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons'
-import { Responsive } from "../Responsive";
+import { Responsive } from "../../components/Responsive/Responsive";
+
 
 const validateForm = (...errors) => {
     let valid = true;
@@ -159,7 +160,7 @@ class NewRecipe extends Component {
                     directions: this.state.directions.split("\n"),
                     img: this.state.img
                 }
-                this.props.addUserRecipe(userRecipe);
+                this.props.userRecipe(userRecipe);
 
                 this.form.reset();
 
@@ -295,6 +296,8 @@ class NewRecipe extends Component {
         )
     }
 }
+
+
 
 
 export default NewRecipe; 
